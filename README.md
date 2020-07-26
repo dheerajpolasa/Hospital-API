@@ -76,3 +76,11 @@ Open Postman, Since all the route are secured with jwt, you need make sure that 
 6. For fetching all the reports by status, Make a GET request on this URL /api/v1/reports/:status
 ```
 
+# Unit Testing
+```
+There are three unit test in total.
+They are:
+1. Unit test for patient registration which will check whether the patient is created or not
+2. Unit test for report creation which will check whether a new report is created or not
+3. Unit test for all reports which will check whether the earlier created report is present in these reports or not
+```
