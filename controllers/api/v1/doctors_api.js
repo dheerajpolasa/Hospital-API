@@ -1,5 +1,6 @@
 const Doctor = require('../../../models/doctor')
 const jwt = require('jsonwebtoken')
+const bcrypt = require('bcrypt');
 
 module.exports.index = function(req, res) {
     console.log('Inside')
@@ -14,18 +15,32 @@ module.exports.createSession = async function(req, res) {
         console.log(req.body);
         let doctor = await Doctor.findOne({username: req.body.username})
 
-        if(!doctor || doctor.password !== req.body.password) {
+        if(!doctor) {
             return res.json(422, {
                 message: 'Invalid Username or Password'
             })
         }
 
-        return res.json(200, {
-            message: 'Sign In successful, here is your token, please keep it safe',
-            data: {
-                token: jwt.sign(doctor.toJSON(), 'corona', {expiresIn: 100000})
+        const hashedPassword = await bcrypt.hash(req.body.password, 10);
+        console.log(doctor.password, hashedPassword);
+        await bcrypt.compare(req.body.password, doctor.password, (err, isMatch) => {
+            if(err) throw err;
+            console.log(isMatch);
+            if(isMatch) {
+                return res.json(200, {
+                    message: 'Sign In successful, here is your token, please keep it safe',
+                    data: {
+                        token: jwt.sign(doctor.toJSON(), 'corona', {expiresIn: 100000})
+                    }
+                })
+            } else {
+                return res.json(422, {
+                message: 'Invalid Username or Password'
+                })
             }
         })
+
+        
     } catch(err) {
         return res.json(500, {
             error: err
@@ -44,7 +59,11 @@ module.exports.createDoctor = async function(req, res) {
                 message: 'Already registered'
             })
         }
-        await Doctor.create(req.body);
+        const hashedPassword = await bcrypt.hash(req.body.password, 10);
+        await Doctor.create({
+            username: req.body.username,
+            password: hashedPassword
+        });
         return res.json({
             message: 'Doctor Profile Created',
             link: 'Hit this URI for creating session - /doctors/create-session'
