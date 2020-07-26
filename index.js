@@ -2,8 +2,11 @@ const express = require('express');
 const port = 8080;
 const path = require('path');
 const cookieParser = require('cookie-parser');
-const mongoose = require('mongoose');
-const db = require('./config/mongoose');
+
+if(process.env.NODE_ENV !== 'development') {
+    const mongoose = require('mongoose');
+    const db = require('./config/mongoose');
+}
 
 const passportJwt = require('./config/passport-jwt-strategy')
 
