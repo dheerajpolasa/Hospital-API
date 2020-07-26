@@ -52,6 +52,34 @@ describe('Hospital-API', () => {
                 })
         })
     })
+
+    describe('/patients/:id/create_report POST', () => {
+        it('Check if it is creating a report', done => {
+            const report = {
+                name: 'test-patient',
+                patient: patientId,
+                doctor: 'doctor',
+                status: 'Negative',
+                date: new Date()
+            }
+            console.log(patientId);
+            chai.request(server)
+                .post('/api/v1/patients/'+patientId+'/create-report')
+                .set('content-type', 'application/x-www-form-urlencoded')
+                .set('Authorization', authBearerToken)
+                .send(report)
+                // Testing the creation of report
+                .end((err, res) => {
+                    reportJSON = res.body.report;
+                    res.should.have.status(200);
+                    res.body.report.should.have.property('name');
+                    res.body.report.should.have.property('doctor');
+                    res.body.report.should.have.property('status');
+                    res.body.report.should.have.property('patient');
+                    done();
+                })
+        })
+    })
 })
 
 process.env.NODE_ENV = 'development';
