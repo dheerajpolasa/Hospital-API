@@ -80,6 +80,28 @@ describe('Hospital-API', () => {
                 })
         })
     })
+
+    describe('/patients/:id/all_reports GET', () => {
+        it('Check if the newly created report is present in the all reports', done => {
+            chai.request(server)
+                .get('/api/v1/patients/'+patientId+'/all-reports')
+                .set('content-type', 'application/x-www-form-urlencoded')
+                .set('authorization', authBearerToken)
+                .send()
+                // Testing the report which is created now
+                .end((err, res) => {
+                    console.log(res);
+                    let flag = false;
+                    res.body.reports.forEach(report => {
+                        if(report._id === reportJSON._id) {
+                            flag = true;
+                        }
+                    });
+                    expected(true).equals(flag);
+                    done();
+                })
+        })
+    })
 })
 
 process.env.NODE_ENV = 'development';
