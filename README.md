@@ -85,4 +85,6 @@ They are:
 1. Unit test for patient registration which will check whether the patient is created or not
 2. Unit test for report creation which will check whether a new report is created or not
 3. Unit test for all reports which will check whether the earlier created report is present in these reports or not
+
+Usage: npm test
 ```
