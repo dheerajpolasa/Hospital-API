@@ -79,7 +79,7 @@ Open Postman, Since all the route are secured with jwt, you need make sure that 
 # Unit Testing
 ```
 Folder: /test in root folder where you can find all the unit tests.
-Note: Separate DB is used for testing, # testMongoose.js in config directory is for unit testing.
+Note: Separate DB is used for testing, testMongoose.js in config directory is for unit testing.
 There are three unit test in total using Mocha.
 They are:
 1. Unit test for patient registration which will check whether the patient is created or not
