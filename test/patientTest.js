@@ -1,6 +1,6 @@
 process.env.NODE_ENV = 'test';
 const chai = require('chai');
-const expect = chai.expect;
+const expected = chai.expect;
 const chaiHttp = require('chai-http');
 const jwt = require('jsonwebtoken');
 
@@ -14,6 +14,7 @@ const server = require('…/index');
 chai.should();
 chai.use(chaiHttp);
 
+// This token is to be provide. You can get this token by hitting post request on /api/v1/doctors/create-session
 let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjFkNDIxN2ViNjFhYTJmODg0ZWNhMmQiLCJ1c2VybmFtZSI6ImRoZWVyYWoiLCJwYXNzd29yZCI6IjEiLCJjcmVhdGVkQXQiOiIyMDIwLTA3LTI2VDA4OjQzOjAzLjQ2M1oiLCJ1cGRhdGVkQXQiOiIyMDIwLTA3LTI2VDA4OjQzOjAzLjQ2M1oiLCJfX3YiOjAsImlhdCI6MTU5NTc1NjY0OSwiZXhwIjoxNTk1ODU2NjQ5fQ.6764TAdfGHjwfvV70WgZjzW5EYMZmnnb3OkPgKZa9RE';
 
 let authBearerToken = 'bearer ' + token;
